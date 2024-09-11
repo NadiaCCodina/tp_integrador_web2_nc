@@ -2,6 +2,7 @@ const btn = document.getElementById("btnfetch");
 const url = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/'
 buscarKey();
 cargarSelect();
+obtenerPagina();
 
 function cargarSelect() {
     const departamentos = document.getElementById("departamentos")
@@ -57,7 +58,7 @@ function buscarKey() {
             .then((data) => {
                 dataId = data.objectIDs;
                 numeracionPag(dataId);
-                primerasTarjetas(dataId);
+                mostrarTarjetas(dataId, 0, 20);
                 console.log("Data obtenida: ", dataId);
             })
 
@@ -70,20 +71,43 @@ function buscarKey() {
 
 function numeracionPag(ids) {
     let cantidadPag = ids.length / 20
-    if (cantidadPag <= 1) {
-        console.log("nada")
-    } else {
-        for (var item = 1; item < cantidadPag; item++) {
-            document.querySelector("#paginas").innerHTML = document.querySelector("#paginas").innerHTML + `  <button> ${item}</button>`
-        }
+    /*   if (cantidadPag >= 1) {
+          for (var i = 1; i < cantidadPag; i++) {
+              document.querySelector("#paginas").innerHTML = document.querySelector("#paginas").innerHTML + `  <button id="btnP${i}"> ${i}</button>`
+              let btnP = document.getElementById("btnP${i}");
+              btnP.addEventListener("click", () => {console.log(btnP)})
+          }
+      } */
+
+    let paginasElement = document.querySelector("#paginas");
+    paginasElement.innerHTML = '';
+
+    for (let i = 1; i <= cantidadPag; i++) {
+        let button = document.createElement("button");
+        button.id = `btnP${i}`;
+        button.textContent = i;
+
+
+        paginasElement.appendChild(button);
+
+
+        button.addEventListener("click", () => {
+            console.log(`Button ${i} clicked`);
+            const inicio = (i - 1) * 20;
+            const final = inicio + 20;
+            document.querySelector("#tarjetas").innerHTML = ""
+            mostrarTarjetas(ids, inicio, final)
+        });
     }
 }
 
-function primerasTarjetas(tarjetas) {
+
+
+function mostrarTarjetas(tarjetas, inicio, fin) {
 
     console.log(tarjetas)
 
-    let card = tarjetas.slice(0, 10)
+    let card = tarjetas.slice(inicio, fin)
     for (let item of card) {
         fetch(url + item)
             .then((response) => response.json())
@@ -118,8 +142,3 @@ function crearTarjetas(objeto) {
 
 }
 
-function obtenerPagina(pagina = 1) {
-    const corteDeInicio = (paginaActual - 1) * elementosPorPagina;
-    const corteDeFinal = corteDeInicio + elementosPorPagina;
-    return baseDeDatos.slice(corteDeInicio, corteDeFinal);
-}
