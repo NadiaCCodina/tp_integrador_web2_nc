@@ -25,7 +25,6 @@ function cargarSelect() {
         )
 }
 
-
 function buscarKey() {
     btn.addEventListener("click", () => {
 
@@ -57,11 +56,11 @@ function buscarKey() {
             .then((response) => response.json())
             .then((data) => {
                 dataId = data.objectIDs;
-
-                cards(dataId);
+                numeracionPag(dataId);
+                primerasTarjetas(dataId);
                 console.log("Data obtenida: ", dataId);
             })
-       
+
 
         console.log("Palabra clave: " + keyWord)
         console.log("Locacion: " + locationWord)
@@ -69,7 +68,18 @@ function buscarKey() {
 
 }
 
-function cards(tarjetas) {
+function numeracionPag(ids) {
+    let cantidadPag = ids.length / 20
+    if (cantidadPag <= 1) {
+        console.log("nada")
+    } else {
+        for (var item = 1; item < cantidadPag; item++) {
+            document.querySelector("#paginas").innerHTML = document.querySelector("#paginas").innerHTML + `  <button> ${item}</button>`
+        }
+    }
+}
+
+function primerasTarjetas(tarjetas) {
 
     console.log(tarjetas)
 
@@ -104,13 +114,6 @@ function crearTarjetas(objeto) {
 
     document.querySelector("#tarjetas").innerHTML = document.querySelector("#tarjetas").innerHTML + cad2
     console.log("cad2: " + cad2)
-
-
-}
-
-function crearNumerosPag(arreglo) {
-
-    let cantidadPag = arreglo.length / 20
 
 
 }
