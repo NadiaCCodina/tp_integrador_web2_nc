@@ -2,10 +2,14 @@ const btn = document.getElementById("btnfetch");
 const url = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/'
 buscarKey();
 cargarSelect();
-obtenerPagina();
+//obtenerPagina();
 
 function cargarSelect() {
+
     const departamentos = document.getElementById("departamentos")
+    if (!departamentos) {
+        return
+    }
     var option = document.createElement("option")
     option.value = 0;
     option.text = "Todos los Departamentos"
@@ -27,11 +31,15 @@ function cargarSelect() {
 }
 
 function buscarKey() {
+    if (!btn) {
+        return
+    }
     btn.addEventListener("click", () => {
 
         document.querySelector("#tarjetas").innerHTML = ""
 
         let keyWord = key.value
+        console.log("palabraclave" + keyWord)
         if (!keyWord) {
             keyWord = "*";
         }
@@ -44,10 +52,8 @@ function buscarKey() {
         let department = "";
 
         if (departamentos.value) {
-            if (departamentos.value == 0) {
-                department = `&departmentId=*`
-            }
-            else {
+            if (departamentos.value > 0) {
+
                 department = `&departmentId=${departamentos.value}`
             }
             console.log(department)
@@ -71,37 +77,74 @@ function buscarKey() {
 
 function numeracionPag(ids) {
     let cantidadPag = ids.length / 20
-    /*   if (cantidadPag >= 1) {
-          for (var i = 1; i < cantidadPag; i++) {
-              document.querySelector("#paginas").innerHTML = document.querySelector("#paginas").innerHTML + `  <button id="btnP${i}"> ${i}</button>`
-              let btnP = document.getElementById("btnP${i}");
-              btnP.addEventListener("click", () => {console.log(btnP)})
-          }
-      } */
+    let paginaInicial = cantidadPag / 20;
+    let paginaFinal = cantidadPag;
+    let aumentoBotones = 20;
+    let pagina = 20;
+    let i = 1;
+    console.log("cantidad de paginas " + cantidadPag)
 
+    if (cantidadPag > 20) {
+        console.log("entro al if")
+        mostrarBotones(ids, i, 20);
+        let botonMasPaginas = document.createElement("button");
+        botonMasPaginas.textContent = "siguientes"
+        let paginasElement = document.querySelector("#paginas");
+        paginasElement.appendChild(botonMasPaginas);
+
+
+
+
+
+        botonMasPaginas.addEventListener("click", () => {
+            i = i + aumentoBotones;
+            pagina = pagina + aumentoBotones;
+
+            mostrarBotones(ids, i, pagina)
+
+            paginasElement.appendChild(botonMasPaginas);
+
+        })
+    } else {
+        mostrarBotones(ids, i, 20);
+
+    }
+
+}
+
+
+
+
+function mostrarBotones(ids, i, cantidadPag) {
     let paginasElement = document.querySelector("#paginas");
     paginasElement.innerHTML = '';
-
-    for (let i = 1; i <= cantidadPag; i++) {
-        let button = document.createElement("button");
-        button.id = `btnP${i}`;
-        button.textContent = i;
-
-
-        paginasElement.appendChild(button);
+    for (; i <= cantidadPag; i++) {
+        let boton = document.createElement("button");
+        boton.id = `btnP${i}`;
+        boton.textContent = i;
 
 
-        button.addEventListener("click", () => {
+        paginasElement.appendChild(boton);
+
+
+        boton.addEventListener("click", () => {
             console.log(`Button ${i} clicked`);
+            //let botonBorrar = document.getElementsByClassName("botonElegido")
+            let borrar = document.querySelector(".botonElegido")
+
+            //console.log(borrar+" borrar")
+            // botonBorrar.classList= "botonborrar"
+            if (borrar) {
+                borrar.classList.remove('botonElegido')
+            }
             const inicio = (i - 1) * 20;
             const final = inicio + 20;
+            boton.className = "botonElegido"
             document.querySelector("#tarjetas").innerHTML = ""
             mostrarTarjetas(ids, inicio, final)
         });
     }
 }
-
-
 
 function mostrarTarjetas(tarjetas, inicio, fin) {
 
@@ -118,26 +161,88 @@ function mostrarTarjetas(tarjetas, inicio, fin) {
 
 function crearTarjetas(objeto) {
     let imagen = objeto.primaryImage;
+    let imagenesAdicionales = objeto.additionalImages
+    let boton
     if (!imagen) {
         imagen = "https://bocashop.vteximg.com.br/arquivos/ids/163215-1000-1000/not-available-es.png?v=637443433440730000"
     }
+
     imagen = encodeURI(imagen)
+    console.log("imagenes adicionales" + imagenesAdicionales)
 
-    let cad2 = `
-    <div id="tarjeta">
-      
+    boton =
+        `
+     <button class="masImagenes"  id="btnImagenes${objeto.objectID}">
+                 Mas imagenes
+             </button>
+
+    `
+
+    console.log(imagenesAdicionales.length+"tamaño imagenes adicionales")
+    const tarjeta = document.createElement('div');
+    tarjeta.className = 'tarjeta';
+
+    const fechaObra = document.createElement('h5');
+    fechaObra.className = 'fechaObra';
+    fechaObra.textContent = objeto.objectDate;
+    tarjeta.appendChild(fechaObra);
+
+    const idObra = document.createElement('h5');
+    idObra.className = 'idObra';
+    idObra.textContent = `id: ${objeto.objectID}`;
+    tarjeta.appendChild(idObra);
+
+    const img = document.createElement('img');
+    img.className = 'imgb';
+    img.src = imagen;
+    img.alt = objeto.title;
+    tarjeta.appendChild(img);
+
+    const tituloObra = document.createElement('h2');
+    tituloObra.className = 'tituloObra';
+    tituloObra.textContent = objeto.title;
+    tarjeta.appendChild(tituloObra);
+
+
+    if (imagenesAdicionales.length > 0 && imagenesAdicionales[0] !== "") {
+        const botonElemento = document.createElement('div');
+        botonElemento.innerHTML = boton;
+        tarjeta.appendChild(botonElemento);
+        console.log(imagenesAdicionales+" imagenes adicionales dentro del boton")
+        
+        let imagenesAdd =document.getElementById("imagenesAd")
+        if (imagenesAdd) {
+           botonElemento.addEventListener("click", () => {
+            console.log(imagenesAdicionales)
+            
+           // window.location.href="./galeria.html";
+            for (var i = 0; i < imagenesAdicionales.length; i++) {
+                const imagenAdic = document.createElement('img');
+                imagenAdic.src = imagenesAdicionales[i];
+                document.getElementById('imagenesAd').appendChild(imagenAdic);
     
-    <img class= "imgb"
-       src=${imagen} alt=${objeto.title}> 
-    <h2 id="tituloObra"> ${objeto.title}</h2>
-   
-     </div>
+            }
+    
+            //tarjeta.appendChild(botonElemento);
+            // idBoton.addEventListener("click", () => {
+    
+            // })
+        })
+    }
 
-     
-       `
+    document.getElementById('tarjetas').appendChild(tarjeta);
+    
+  
 
-    document.querySelector("#tarjetas").innerHTML = document.querySelector("#tarjetas").innerHTML + cad2
-    console.log("cad2: " + cad2)
+    }
+
+
+
+
+
+
+    // document.querySelector("#tarjetas").innerHTML = document.querySelector("#tarjetas").innerHTML + cad2
+    // //console.log("cad2: " + cad2)
 
 
 }
