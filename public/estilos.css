@@ -29,8 +29,21 @@ header{
   }
   .tituloObra{
     font-weight: 400;
-    font-size: 20px;
+    font-size: 22px;
    
+    padding: 5px;
+  }
+
+  .culturaObra{
+    font-weight: 400;
+    font-size: 17px;
+   
+    padding: 5px;
+  }
+
+  .dinastiaObra{
+    font-weight: 400;
+    font-size: 17px;
     padding: 5px;
   }
   .imgb {
@@ -86,4 +99,21 @@ padding: 10px;
 }
 .botonborrar{
  background-color: white;
+}
+
+.imageneAdicional{
+  position: relative;
+  width: 600px;
+  height:auto;
+  padding-top: 15%;
+  display: flex;
+  padding-left: 15%;
+}
+
+#imagenesAd{
+  margin-top: 75px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around 
 }

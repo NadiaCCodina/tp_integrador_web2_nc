@@ -37,6 +37,7 @@ function buscarKey() {
     btn.addEventListener("click", () => {
 
         document.querySelector("#tarjetas").innerHTML = ""
+        document.querySelector("#imagenesAd").innerHTML = ""
 
         let keyWord = key.value
         console.log("palabraclave" + keyWord)
@@ -82,6 +83,7 @@ function numeracionPag(ids) {
     let aumentoBotones = 20;
     let pagina = 20;
     let i = 1;
+
     console.log("cantidad de paginas " + cantidadPag)
 
     if (cantidadPag > 20) {
@@ -91,11 +93,6 @@ function numeracionPag(ids) {
         botonMasPaginas.textContent = "siguientes"
         let paginasElement = document.querySelector("#paginas");
         paginasElement.appendChild(botonMasPaginas);
-
-
-
-
-
         botonMasPaginas.addEventListener("click", () => {
             i = i + aumentoBotones;
             pagina = pagina + aumentoBotones;
@@ -106,7 +103,7 @@ function numeracionPag(ids) {
 
         })
     } else {
-        mostrarBotones(ids, i, 20);
+        mostrarBotones(ids, i, cantidadPag);
 
     }
 
@@ -118,15 +115,14 @@ function numeracionPag(ids) {
 function mostrarBotones(ids, i, cantidadPag) {
     let paginasElement = document.querySelector("#paginas");
     paginasElement.innerHTML = '';
-    for (; i <= cantidadPag; i++) {
+
+    for (i; i <= cantidadPag; i++) {
+        console.log("i " + i)
         let boton = document.createElement("button");
-        boton.id = `btnP${i}`;
+        boton.id = i;
         boton.textContent = i;
 
-
-        paginasElement.appendChild(boton);
-
-
+        // paginasElement.appendChild(boton);
         boton.addEventListener("click", () => {
             console.log(`Button ${i} clicked`);
             //let botonBorrar = document.getElementsByClassName("botonElegido")
@@ -137,24 +133,37 @@ function mostrarBotones(ids, i, cantidadPag) {
             if (borrar) {
                 borrar.classList.remove('botonElegido')
             }
-            const inicio = (i - 1) * 20;
+            const inicio = (boton.id - 1) * 20;
             const final = inicio + 20;
-            boton.className = "botonElegido"
+            console.log("inicio y final " + inicio + " " + final)
+            boton.className = "botonElegido"'
             document.querySelector("#tarjetas").innerHTML = ""
             mostrarTarjetas(ids, inicio, final)
+
         });
+        paginasElement.appendChild(boton);
     }
+
 }
 
 function mostrarTarjetas(tarjetas, inicio, fin) {
 
-    console.log(tarjetas)
+    console.log("metodo mostrar tarjetas " + inicio + "  " + fin)
 
     let card = tarjetas.slice(inicio, fin)
     for (let item of card) {
         fetch(url + item)
-            .then((response) => response.json())
-            .then((data) => crearTarjetas(data));
+            .then(async (response) => {
+                if (response.ok) {
+                    crearTarjetas(await response.json())
+                } else {
+                    throw new Error('Something went wrong');
+                }
+            })
+
+            .catch((error) => {
+                console.log(error)
+            });
 
     }
 }
@@ -178,7 +187,7 @@ function crearTarjetas(objeto) {
 
     `
 
-    console.log(imagenesAdicionales.length+"tamaño imagenes adicionales")
+
     const tarjeta = document.createElement('div');
     tarjeta.className = 'tarjeta';
 
@@ -203,40 +212,54 @@ function crearTarjetas(objeto) {
     tituloObra.textContent = objeto.title;
     tarjeta.appendChild(tituloObra);
 
+    if (objeto.dynasty != "") {
+        const dinastia = document.createElement('h2');
+        dinastia.className = 'dinastiaObra';
+        dinastia.textContent = "Dinastia: " + objeto.dynasty;
+        tarjeta.appendChild(dinastia);
+    }
 
-    if (imagenesAdicionales.length > 0 && imagenesAdicionales[0] !== "") {
+    if (objeto.culture != "") {
+        const cultura = document.createElement('h2');
+        cultura.className = 'culturaObra';
+        cultura.textContent = "Cultura: " + objeto.culture;
+        tarjeta.appendChild(cultura);
+    }
+
+    if (imagenesAdicionales && imagenesAdicionales.length > 0 && imagenesAdicionales[0] !== "") {
         const botonElemento = document.createElement('div');
         botonElemento.innerHTML = boton;
         tarjeta.appendChild(botonElemento);
-        console.log(imagenesAdicionales+" imagenes adicionales dentro del boton")
-        
-        let imagenesAdd =document.getElementById("imagenesAd")
+        console.log(imagenesAdicionales + " imagenes adicionales dentro del boton")
+
+        let imagenesAdd = document.getElementById("imagenesAd")
         if (imagenesAdd) {
-           botonElemento.addEventListener("click", () => {
-            console.log(imagenesAdicionales)
-            
-           // window.location.href="./galeria.html";
-            for (var i = 0; i < imagenesAdicionales.length; i++) {
-                const imagenAdic = document.createElement('img');
-                imagenAdic.src = imagenesAdicionales[i];
-                document.getElementById('imagenesAd').appendChild(imagenAdic);
-    
-            }
-    
-            //tarjeta.appendChild(botonElemento);
-            // idBoton.addEventListener("click", () => {
-    
-            // })
-        })
+            botonElemento.addEventListener("click", () => {
+                console.log(imagenesAdicionales)
+
+                window.location.href = "./index.html#imagenesAd"
+                for (var i = 0; i < imagenesAdicionales.length; i++) {
+                    const imagenAdic = document.createElement('img');
+                    imagenAdic.src = imagenesAdicionales[i];
+                    imagenAdic.className = "imageneAdicional"
+                    document.getElementById('imagenesAd').appendChild(imagenAdic);
+
+                }
+
+                //tarjeta.appendChild(botonElemento);
+                // idBoton.addEventListener("click", () => {
+
+                // })
+            })
+        }
+
+
+
+
+
     }
 
     document.getElementById('tarjetas').appendChild(tarjeta);
-    
-  
-
-    }
-
-
 
 
 
