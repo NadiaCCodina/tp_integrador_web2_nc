@@ -229,19 +229,21 @@ function crearTarjetas(objeto) {
                 document.querySelector("#imagenesAd").innerHTML = ""
                 console.log(imagenesAdicionales)
                 
-                window.location.href = "./index.html#imagenesAd"
-                for (var i = 0; i < imagenesAdicionales.length; i++) {
-                    const imagenAdic = document.createElement('img');
-                    imagenAdic.src = imagenesAdicionales[i];
-                    imagenAdic.className = "imageneAdicional"
-                    document.getElementById('imagenesAd').appendChild(imagenAdic);
+                //window.location.href = "./index.html#imagenesAd"
+                carruselAdicionales(imagenesAdicionales);
+                // for (var i = 0; i < imagenesAdicionales.length; i++) {
+                //     const imagenAdic = document.createElement('img');
+                //     imagenAdic.src = imagenesAdicionales[i];
+                //     imagenAdic.className = "imageneAdicional"
+                //     document.getElementById('imagenesAd').appendChild(imagenAdic);
 
-                }
+                // }
 
                 //tarjeta.appendChild(botonElemento);
                 // idBoton.addEventListener("click", () => {
 
                 // })
+                  window.location.href = "./index.html#imagenesAd"
             })
         }
 
@@ -261,4 +263,42 @@ function crearTarjetas(objeto) {
 
 
 }
+function carruselAdicionales(imagenesAdicionales) {
+    var elemento = document.getElementById('imagenesAd');
+    if (elemento) {
+        // Vaciar el contenido actual
+        elemento.innerHTML = '';
 
+        // Crear y agregar las imágenes al contenedor
+        const galleryItems = imagenesAdicionales.map(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.display = "none";
+            img.className= "imageneAdicional";
+            elemento.appendChild(img);
+            return img;
+        });
+
+        let currentIndex = 0;
+
+        // Mostrar la primera imagen
+        if (galleryItems.length > 0) {
+            galleryItems[currentIndex].style.display = "block";
+        }
+
+        // Agregar event listeners para los botones de navegación
+        document.querySelector('.prev-button').addEventListener('click', () => {
+            navigate(-1);
+        });
+
+        document.querySelector('.next-button').addEventListener('click', () => {
+            navigate(1);
+        });
+
+        function navigate(direccion) {
+            galleryItems[currentIndex].style.display = "none";
+            currentIndex = (currentIndex + direccion + galleryItems.length) % galleryItems.length;
+            galleryItems[currentIndex].style.display = "block";
+        }
+    }
+}

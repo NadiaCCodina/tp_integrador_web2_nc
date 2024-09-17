@@ -118,3 +118,25 @@ padding: 10px;
   flex-wrap: wrap;
   justify-content: space-around 
 }
+
+.gallery-navigation {
+
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  bottom: 50%;
+
+}
+
+
+.next-button, .prev-button{
+padding: 10px;
+  color: rgb(109, 85, 65);
+  font-size: 32px;
+  display: flex;
+  opacity: 100%;
+ 
+  position: sticky;
+  bottom: 50%;
+  border-color: transparent;
+}
