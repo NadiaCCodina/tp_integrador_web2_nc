@@ -111,6 +111,7 @@ padding: 10px;
 }
 
 #imagenesAd{
+  position: relative;
   margin-top: 75px;
   display: flex;
   flex-direction: row;

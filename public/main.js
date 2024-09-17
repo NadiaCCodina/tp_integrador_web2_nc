@@ -1,8 +1,8 @@
 const btn = document.getElementById("btnfetch");
 const url = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/'
-buscarKey();
+busqueda();
 cargarSelect();
-//obtenerPagina();
+
 
 function cargarSelect() {
 
@@ -30,7 +30,7 @@ function cargarSelect() {
         )
 }
 
-function buscarKey() {
+function busqueda() {
     if (!btn) {
         return
     }
@@ -78,8 +78,6 @@ function buscarKey() {
 
 function numeracionPag(ids) {
     let cantidadPag = ids.length / 20
-    let paginaInicial = cantidadPag / 20;
-    let paginaFinal = cantidadPag;
     let aumentoBotones = 20;
     let pagina = 20;
     let i = 1;
@@ -109,9 +107,6 @@ function numeracionPag(ids) {
 
 }
 
-
-
-
 function mostrarBotones(ids, i, cantidadPag) {
     let paginasElement = document.querySelector("#paginas");
     paginasElement.innerHTML = '';
@@ -122,21 +117,16 @@ function mostrarBotones(ids, i, cantidadPag) {
         boton.id = i;
         boton.textContent = i;
 
-        // paginasElement.appendChild(boton);
         boton.addEventListener("click", () => {
-            console.log(`Button ${i} clicked`);
-            //let botonBorrar = document.getElementsByClassName("botonElegido")
+            document.querySelector("#imagenesAd").innerHTML = ""
             let borrar = document.querySelector(".botonElegido")
-
-            //console.log(borrar+" borrar")
-            // botonBorrar.classList= "botonborrar"
             if (borrar) {
                 borrar.classList.remove('botonElegido')
             }
             const inicio = (boton.id - 1) * 20;
             const final = inicio + 20;
             console.log("inicio y final " + inicio + " " + final)
-            boton.className = "botonElegido"'
+            boton.className = "botonElegido"
             document.querySelector("#tarjetas").innerHTML = ""
             mostrarTarjetas(ids, inicio, final)
 
@@ -227,6 +217,7 @@ function crearTarjetas(objeto) {
     }
 
     if (imagenesAdicionales && imagenesAdicionales.length > 0 && imagenesAdicionales[0] !== "") {
+       
         const botonElemento = document.createElement('div');
         botonElemento.innerHTML = boton;
         tarjeta.appendChild(botonElemento);
@@ -235,8 +226,9 @@ function crearTarjetas(objeto) {
         let imagenesAdd = document.getElementById("imagenesAd")
         if (imagenesAdd) {
             botonElemento.addEventListener("click", () => {
+                document.querySelector("#imagenesAd").innerHTML = ""
                 console.log(imagenesAdicionales)
-
+                
                 window.location.href = "./index.html#imagenesAd"
                 for (var i = 0; i < imagenesAdicionales.length; i++) {
                     const imagenAdic = document.createElement('img');
