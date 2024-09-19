@@ -29,7 +29,6 @@ function cargarSelect() {
         }
         )
 }
-
 function busqueda() {
     if (!btn) {
         return
@@ -75,7 +74,6 @@ function busqueda() {
     })
 
 }
-
 function numeracionPag(ids) {
     let cantidadPag = ids.length / 20
     let aumentoBotones = 20;
@@ -106,7 +104,6 @@ function numeracionPag(ids) {
     }
 
 }
-
 function mostrarBotones(ids, i, cantidadPag) {
     let paginasElement = document.querySelector("#paginas");
     paginasElement.innerHTML = '';
@@ -135,7 +132,6 @@ function mostrarBotones(ids, i, cantidadPag) {
     }
 
 }
-
 function mostrarTarjetas(tarjetas, inicio, fin) {
 
     console.log("metodo mostrar tarjetas " + inicio + "  " + fin)
@@ -157,7 +153,6 @@ function mostrarTarjetas(tarjetas, inicio, fin) {
 
     }
 }
-
 function crearTarjetas(objeto) {
     let imagen = objeto.primaryImage;
     let imagenesAdicionales = objeto.additionalImages
