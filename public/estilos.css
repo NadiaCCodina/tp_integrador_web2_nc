@@ -1,91 +1,99 @@
-*{
+* {
   box-sizing: border-box;
 }
-header{
+
+header {
   height: 50px;
   background-color: rgb(235, 35, 42);
 }
-#logo{
+
+#logo {
   height: 50px;
 }
-.met{
+
+.met {
   padding: 0px;
   margin-top: -15px;
   margin-bottom: -15px;
 }
+
 .tarjeta {
-    position: relative;
-    width: 300px;
-    height:600px;
-    color: rgb(0, 0, 0);
-    margin-top: 10px;
-    border-radius: 10px;
-    overflow: hidden;
-    font-weight: 300;
-    margin: 20px;
-    border-color: rgb(255, 142, 145);
-    border-style: solid;
-    text-align: center;
-  }
-  .tituloObra{
-    font-weight: 400;
-    font-size: 22px;
-   
-    padding: 5px;
-  }
+  position: relative;
+  width: 300px;
+  height: 600px;
+  color: rgb(0, 0, 0);
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  font-weight: 300;
+  margin: 20px;
+  border-color: rgb(255, 142, 145);
+  border-style: solid;
+  text-align: center;
+}
 
-  .culturaObra{
-    font-weight: 400;
-    font-size: 17px;
-   
-    padding: 5px;
-  }
+.tituloObra {
+  font-weight: 400;
+  font-size: 22px;
 
-  .dinastiaObra{
-    font-weight: 400;
-    font-size: 17px;
-    padding: 5px;
-  }
-  .imgb {
-    width: 85%;
-    height: auto;
-    padding-top: 0%;
-    display: flex;
-    padding-left: 15%;
-  }
+  padding: 5px;
+}
 
-#tarjetas{
+.culturaObra {
+  font-weight: 400;
+  font-size: 17px;
+
+  padding: 5px;
+}
+
+.dinastiaObra {
+  font-weight: 400;
+  font-size: 17px;
+  padding: 5px;
+}
+
+.imgb {
+  width: 85%;
+  height: auto;
+  padding-top: 0%;
+  display: flex;
+  padding-left: 15%;
+}
+
+#tarjetas {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around
 }
 
-#portada{
-    width: 100%;
-    height: 120px;
-    border-bottom: 5px solid; 
-  
+#portada {
+  width: 100%;
+  height: 120px;
+  border-bottom: 5px solid;
+
 }
 
-#busqueda{
- 
+#busqueda {
+
 
   background-image: url("../img/themet1.jpg");
   background-size: 100%;
-  
+
   padding: 175px;
 }
-#formulario{
+
+#formulario {
   display: flex;
   flex-direction: column;
 }
-.form{
-padding: 10px;
+
+.form {
+  padding: 10px;
 
 }
 
-.fechaObra{
+.fechaObra {
   padding: 0%;
   opacity: 0%;
 }
@@ -94,49 +102,51 @@ padding: 10px;
   opacity: 100%;
 }
 
-.botonElegido{
+.botonElegido {
   background-color: blue;
 }
-.botonborrar{
- background-color: white;
+
+.botonborrar {
+  background-color: white;
 }
 
-.imageneAdicional{
+.imageneAdicional {
   position: relative;
   width: 600px;
-  height:auto;
+  height: auto;
   padding-top: 15%;
   display: flex;
-  padding-left: 15%;
+ 
 }
 
-#imagenesAd{
+#imagenesAd {
   position: relative;
   margin-top: 75px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around 
+  justify-content: space-around
 }
 
-.gallery-navigation {
+#gallery-navigation {
 
   display: flex;
-  justify-content: space-between;
-  position: sticky;
+  justify-content:space-around;
+  position: relative;
   bottom: 50%;
 
 }
 
 
-.next-button, .prev-button{
-padding: 10px;
-  color: rgb(109, 85, 65);
-  font-size: 32px;
+.next-button,
+.prev-button {
+  padding: 10px;
+  background-color: rgb(0, 0, 0);
+  font-size: 15px;
   display: flex;
-  opacity: 100%;
- 
-  position: sticky;
+  color: aliceblue;
+  border-radius: 12%;
+  position: relative;
   bottom: 50%;
   border-color: transparent;
 }

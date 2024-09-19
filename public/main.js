@@ -212,7 +212,7 @@ function crearTarjetas(objeto) {
     }
 
     if (imagenesAdicionales && imagenesAdicionales.length > 0 && imagenesAdicionales[0] !== "") {
-       
+
         const botonElemento = document.createElement('div');
         botonElemento.innerHTML = boton;
         tarjeta.appendChild(botonElemento);
@@ -223,7 +223,7 @@ function crearTarjetas(objeto) {
             botonElemento.addEventListener("click", () => {
                 document.querySelector("#imagenesAd").innerHTML = ""
                 console.log(imagenesAdicionales)
-                
+
                 //window.location.href = "./index.html#imagenesAd"
                 carruselAdicionales(imagenesAdicionales);
                 // for (var i = 0; i < imagenesAdicionales.length; i++) {
@@ -238,7 +238,7 @@ function crearTarjetas(objeto) {
                 // idBoton.addEventListener("click", () => {
 
                 // })
-                  window.location.href = "./index.html#imagenesAd"
+                window.location.href = "./index.html#imagenesAd"
             })
         }
 
@@ -261,27 +261,36 @@ function crearTarjetas(objeto) {
 function carruselAdicionales(imagenesAdicionales) {
     var elemento = document.getElementById('imagenesAd');
     if (elemento) {
-        // Vaciar el contenido actual
-        elemento.innerHTML = '';
 
-        // Crear y agregar las imágenes al contenedor
+        elemento.innerHTML = '';
+        document.getElementById('gallery-navigation').innerHTML="";
+
         const galleryItems = imagenesAdicionales.map(src => {
             const img = document.createElement('img');
             img.src = src;
             img.style.display = "none";
-            img.className= "imageneAdicional";
+            img.className = "imageneAdicional";
             elemento.appendChild(img);
             return img;
         });
 
         let currentIndex = 0;
+       
+        const prevButton = document.createElement('button');
+        prevButton.className = 'prev-button';
+        prevButton.textContent= "Anterior";
+        const nextButton = document.createElement('button');
+        nextButton.className = 'next-button';
+        nextButton.textContent="Posterior"
+        const container = document.getElementById('gallery-navigation'); 
+        container.appendChild(prevButton);
+        container.appendChild(nextButton);
 
-        // Mostrar la primera imagen
         if (galleryItems.length > 0) {
             galleryItems[currentIndex].style.display = "block";
         }
 
-        // Agregar event listeners para los botones de navegación
+
         document.querySelector('.prev-button').addEventListener('click', () => {
             navigate(-1);
         });
