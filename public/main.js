@@ -240,7 +240,7 @@ async function crearTarjetas(objeto) {
     if (objeto.culture != "") {
         const cultura = document.createElement('h2');
         cultura.className = 'culturaObra';
-        cultura.textContent = "Cultura: " + objeto.culture;
+        cultura.textContent = "Cultura: " + await traducir(objeto.culture);
         tarjeta.appendChild(cultura);
     }
 

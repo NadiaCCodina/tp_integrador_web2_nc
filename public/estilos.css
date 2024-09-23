@@ -131,7 +131,7 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  background-color: aliceblue;
+  background-color:rgb(255, 255, 255);
  
   
 }
