@@ -2,33 +2,93 @@ const btn = document.getElementById("btnfetch");
 const url = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/'
 busqueda();
 cargarSelect();
+//let awaitTraducirHelloWorl = await traducir("hello world")
+//console.log(awaitTraducirHelloWorl)
 
+//let traudcit = async
+
+async function traducir(texto) {
+  
+    return new Promise((resolve, reject) => {
+
+        fetch("/traducir", {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain",
+            },
+            body: (texto)
+        })
+            .then((response) => {
+                if (response.ok) {
+
+                    return response.json();
+                }
+                reject("No se a podido acceder a este recurso " + response.status)
+                return;
+            }).then(respuesta => resolve(respuesta.traduccion))
+            .catch(err => reject(err))
+      
+    })
+}
 
 function cargarSelect() {
 
-    const departamentos = document.getElementById("departamentos")
+    // const departamentos = document.getElementById("departamentos")
+    // if (!departamentos) {
+    //     return
+    // }
+    // var option = document.createElement("option")
+    // option.value = 0;
+    // option.text = "Todos los Departamentos"
+    // departamentos.appendChild(option);
+    // fetch('https://collectionapi.metmuseum.org/public/collection/v1/departments')
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         console.log(data)
+
+    //         for (var i = 0; i < data.departments.length; i++) {
+    //             var option = document.createElement("option");
+    //             option.value = data.departments[i].departmentId;
+    //             option.text = traducir(data.departments[i].displayName);
+    //             departamentos.appendChild(option);
+    //             console.log(option)
+    //         }
+    //     })
+
+    const departamentos = document.getElementById("departamentos");
     if (!departamentos) {
-        return
+        return;
     }
-    var option = document.createElement("option")
+    
+    let option = document.createElement("option");
     option.value = 0;
-    option.text = "Todos los Departamentos"
+    option.text = "Todos los Departamentos";
     departamentos.appendChild(option);
+    
     fetch('https://collectionapi.metmuseum.org/public/collection/v1/departments')
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
-
-            for (var i = 0; i < data.departments.length; i++) {
-                var option = document.createElement("option");
-                option.value = data.departments[i].departmentId;
-                option.text = data.departments[i].displayName;
-                departamentos.appendChild(option);
-                console.log(option)
-            }
-        }
-        )
+            console.log(data);
+    
+            const traducciones = data.departments.map(departamento => 
+                traducir(departamento.displayName)
+            );
+    
+            return Promise.all(traducciones).then((traducciones) => {
+          
+                for (let i = 0; i < traducciones.length; i++) {
+                    let option = document.createElement("option");
+                    option.value = data.departments[i].departmentId; 
+                    option.text = traducciones[i]; 
+                    departamentos.appendChild(option);
+                    console.log(option);
+                }
+            });
+        })
+        .catch(err => console.error("Error al obtener departamentos o traducir:", err));
+    
 }
+
 function busqueda() {
     if (!btn) {
         return
@@ -137,6 +197,7 @@ function mostrarTarjetas(tarjetas, inicio, fin) {
     console.log("metodo mostrar tarjetas " + inicio + "  " + fin)
 
     let card = tarjetas.slice(inicio, fin)
+
     for (let item of card) {
         fetch(url + item)
             .then(async (response) => {
@@ -153,7 +214,7 @@ function mostrarTarjetas(tarjetas, inicio, fin) {
 
     }
 }
-function crearTarjetas(objeto) {
+async function crearTarjetas(objeto) {
     let imagen = objeto.primaryImage;
     let imagenesAdicionales = objeto.additionalImages
     let boton
@@ -181,10 +242,10 @@ function crearTarjetas(objeto) {
     fechaObra.textContent = objeto.objectDate;
     tarjeta.appendChild(fechaObra);
 
-    const idObra = document.createElement('h5');
-    idObra.className = 'idObra';
-    idObra.textContent = `id: ${objeto.objectID}`;
-    tarjeta.appendChild(idObra);
+    // const idObra = document.createElement('h5');
+    // idObra.className = 'idObra';
+    // idObra.textContent = `id: ${objeto.objectID}`;
+    // tarjeta.appendChild(idObra);
 
     const img = document.createElement('img');
     img.className = 'imgb';
@@ -194,13 +255,13 @@ function crearTarjetas(objeto) {
 
     const tituloObra = document.createElement('h2');
     tituloObra.className = 'tituloObra';
-    tituloObra.textContent = objeto.title;
+    tituloObra.textContent = await traducir(objeto.title);
     tarjeta.appendChild(tituloObra);
 
     if (objeto.dynasty != "") {
         const dinastia = document.createElement('h2');
         dinastia.className = 'dinastiaObra';
-        dinastia.textContent = "Dinastia: " + objeto.dynasty;
+        dinastia.textContent = "Dinastia: " + await traducir(objeto.dynasty);
         tarjeta.appendChild(dinastia);
     }
 
@@ -263,7 +324,7 @@ function carruselAdicionales(imagenesAdicionales) {
     if (elemento) {
 
         elemento.innerHTML = '';
-        document.getElementById('gallery-navigation').innerHTML="";
+        document.getElementById('gallery-navigation').innerHTML = "";
 
         const galleryItems = imagenesAdicionales.map(src => {
             const img = document.createElement('img');
@@ -275,14 +336,14 @@ function carruselAdicionales(imagenesAdicionales) {
         });
 
         let currentIndex = 0;
-       
+
         const prevButton = document.createElement('button');
         prevButton.className = 'prev-button';
-        prevButton.textContent= "Anterior";
+        prevButton.textContent = "Anterior";
         const nextButton = document.createElement('button');
         nextButton.className = 'next-button';
-        nextButton.textContent="Posterior"
-        const container = document.getElementById('gallery-navigation'); 
+        nextButton.textContent = "Posterior"
+        const container = document.getElementById('gallery-navigation');
         container.appendChild(prevButton);
         container.appendChild(nextButton);
 
