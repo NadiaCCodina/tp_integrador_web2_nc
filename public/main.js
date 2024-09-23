@@ -347,10 +347,17 @@ function carruselAdicionales(imagenesAdicionales) {
         const container = document.getElementById('gallery-navigation');
         const salir = document.createElement('button');
         salir.textContent="salir";
-        document.getElementById(salirCarrusel).appendChild(salir);
+        salir.className = "salirAdicionales"
+        const salirCarr = document.getElementById("salirCarrusel")
+        salirCarr.appendChild(salir);
         container.appendChild(prevButton);
         container.appendChild(nextButton);
-
+        document.querySelector('.salirAdicionales').addEventListener('click', () => {
+            document.getElementById('gallery-navigation').innerHTML = "";
+            elemento.innerHTML = ''
+            salirCarr.innerHTML= ""  
+            elemento.style.height="0%";   
+        });  
         if (galleryItems.length > 0) {
             galleryItems[currentIndex].style.display = "block";
         }
