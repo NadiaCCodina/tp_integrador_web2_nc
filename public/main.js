@@ -2,10 +2,7 @@ const btn = document.getElementById("btnfetch");
 const url = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/'
 busqueda();
 cargarSelect();
-//let awaitTraducirHelloWorl = await traducir("hello world")
-//console.log(awaitTraducirHelloWorl)
 
-//let traudcit = async
 
 async function traducir(texto) {
   
@@ -33,27 +30,6 @@ async function traducir(texto) {
 
 function cargarSelect() {
 
-    // const departamentos = document.getElementById("departamentos")
-    // if (!departamentos) {
-    //     return
-    // }
-    // var option = document.createElement("option")
-    // option.value = 0;
-    // option.text = "Todos los Departamentos"
-    // departamentos.appendChild(option);
-    // fetch('https://collectionapi.metmuseum.org/public/collection/v1/departments')
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //         console.log(data)
-
-    //         for (var i = 0; i < data.departments.length; i++) {
-    //             var option = document.createElement("option");
-    //             option.value = data.departments[i].departmentId;
-    //             option.text = traducir(data.departments[i].displayName);
-    //             departamentos.appendChild(option);
-    //             console.log(option)
-    //         }
-    //     })
 
     const departamentos = document.getElementById("departamentos");
     if (!departamentos) {
@@ -146,7 +122,7 @@ function numeracionPag(ids) {
         console.log("entro al if")
         mostrarBotones(ids, i, 20);
         let botonMasPaginas = document.createElement("button");
-        botonMasPaginas.textContent = "siguientes"
+        botonMasPaginas.textContent = "..."
         let paginasElement = document.querySelector("#paginas");
         paginasElement.appendChild(botonMasPaginas);
         botonMasPaginas.addEventListener("click", () => {
@@ -242,10 +218,6 @@ async function crearTarjetas(objeto) {
     fechaObra.textContent = objeto.objectDate;
     tarjeta.appendChild(fechaObra);
 
-    // const idObra = document.createElement('h5');
-    // idObra.className = 'idObra';
-    // idObra.textContent = `id: ${objeto.objectID}`;
-    // tarjeta.appendChild(idObra);
 
     const img = document.createElement('img');
     img.className = 'imgb';
@@ -285,37 +257,16 @@ async function crearTarjetas(objeto) {
                 document.querySelector("#imagenesAd").innerHTML = ""
                 console.log(imagenesAdicionales)
 
-                //window.location.href = "./index.html#imagenesAd"
+           
                 carruselAdicionales(imagenesAdicionales);
-                // for (var i = 0; i < imagenesAdicionales.length; i++) {
-                //     const imagenAdic = document.createElement('img');
-                //     imagenAdic.src = imagenesAdicionales[i];
-                //     imagenAdic.className = "imageneAdicional"
-                //     document.getElementById('imagenesAd').appendChild(imagenAdic);
-
-                // }
-
-                //tarjeta.appendChild(botonElemento);
-                // idBoton.addEventListener("click", () => {
-
-                // })
-                window.location.href = "./index.html#imagenesAd"
+               
+              //  window.location.href = "./index.html#imagenesAd"
             })
         }
-
-
-
-
 
     }
 
     document.getElementById('tarjetas').appendChild(tarjeta);
-
-
-
-
-    // document.querySelector("#tarjetas").innerHTML = document.querySelector("#tarjetas").innerHTML + cad2
-    // //console.log("cad2: " + cad2)
 
 
 }

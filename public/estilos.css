@@ -190,3 +190,8 @@ header {
   bottom: 50%;
   border-color: transparent;
 }
+
+#paginas{
+  display: flex;
+  justify-content:space-around;
+}
