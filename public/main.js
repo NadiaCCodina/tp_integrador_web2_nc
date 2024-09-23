@@ -332,6 +332,7 @@ function carruselAdicionales(imagenesAdicionales) {
             img.style.display = "none";
             img.className = "imageneAdicional";
             elemento.appendChild(img);
+            elemento.style.height = '100%';
             return img;
         });
 
@@ -344,6 +345,9 @@ function carruselAdicionales(imagenesAdicionales) {
         nextButton.className = 'next-button';
         nextButton.textContent = "Posterior"
         const container = document.getElementById('gallery-navigation');
+        const salir = document.createElement('button');
+        salir.textContent="salir";
+        document.getElementById(salirCarrusel).appendChild(salir);
         container.appendChild(prevButton);
         container.appendChild(nextButton);
 

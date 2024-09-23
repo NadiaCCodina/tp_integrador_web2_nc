@@ -112,11 +112,12 @@ header {
 
 .imageneAdicional {
   position: relative;
-  width: 600px;
-  height: auto;
-
+  width: auto;
+  height: 600px;
+  margin: auto;
   display: flex;
- 
+  top:5%;
+  
 }
 
 #imagenesAd {
@@ -125,8 +126,8 @@ header {
   overflow: auto;
   top: 0;
   width: 100%;
-  padding-left: 50px;
-  display: flex;
+
+
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -139,7 +140,7 @@ header {
   z-index: 1;
   position: fixed;
   overflow: auto;
-  top: 0;
+  bottom: 0;
   width: 100%;
   display: flex;
   justify-content:space-around;
