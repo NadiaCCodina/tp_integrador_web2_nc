@@ -92,7 +92,7 @@ function busqueda() {
 
                 department = `&departmentId=${departamentos.value}`
             }
-            console.log(department)
+            //console.log(department)
 
         }
         fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${keyWord}${locationWord}${department}`)
@@ -105,8 +105,8 @@ function busqueda() {
             })
 
 
-        console.log("Palabra clave: " + keyWord)
-        console.log("Locacion: " + locationWord)
+       // console.log("Palabra clave: " + keyWord)
+       // console.log("Locacion: " + locationWord)
     })
 
 }
@@ -249,18 +249,14 @@ async function crearTarjetas(objeto) {
         const botonElemento = document.createElement('div');
         botonElemento.innerHTML = boton;
         tarjeta.appendChild(botonElemento);
-        console.log(imagenesAdicionales + " imagenes adicionales dentro del boton")
+       // console.log(imagenesAdicionales + " imagenes adicionales dentro del boton")
 
         let imagenesAdd = document.getElementById("imagenesAd")
         if (imagenesAdd) {
             botonElemento.addEventListener("click", () => {
                 document.querySelector("#imagenesAd").innerHTML = ""
-                console.log(imagenesAdicionales)
-
-           
+                //console.log(imagenesAdicionales)
                 carruselAdicionales(imagenesAdicionales);
-               
-              //  window.location.href = "./index.html#imagenesAd"
             })
         }
 

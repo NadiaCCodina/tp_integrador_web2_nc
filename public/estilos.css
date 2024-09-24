@@ -19,7 +19,7 @@ header {
 
 .tarjeta {
   position: relative;
-  width: 300px;
+  width: 20%;
   height: 600px;
   color: rgb(0, 0, 0);
   margin-top: 10px;
@@ -58,6 +58,7 @@ header {
   padding-top: 0%;
   display: flex;
   padding-left: 15%;
+
 }
 
 #tarjetas {
@@ -65,6 +66,7 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around
+  
 }
 
 #portada {
@@ -75,11 +77,11 @@ header {
 }
 
 #busqueda {
-
-
+  
+  display: flex;
   background-image: url("../img/themet1.jpg");
   background-size: 100%;
-
+  justify-content:center;
   padding: 175px;
 }
 
@@ -126,8 +128,6 @@ header {
   overflow: auto;
   top: 0;
   width: 100%;
-
-
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -193,5 +193,5 @@ header {
 
 #paginas{
   display: flex;
-  justify-content:space-around;
+  justify-content:center;
 }
