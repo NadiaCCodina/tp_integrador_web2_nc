@@ -5,6 +5,7 @@
 header {
   height: 50px;
   background-color: rgb(235, 35, 42);
+  width: 100%;
 }
 
 #logo {
