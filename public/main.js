@@ -45,7 +45,7 @@ function cargarSelect() {
     fetch('https://collectionapi.metmuseum.org/public/collection/v1/departments')
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+           // console.log(data);
 
             const traducciones = data.departments.map(departamento =>
                 traducir(departamento.displayName)
@@ -105,11 +105,8 @@ function busqueda() {
                 console.log("Data obtenida: ", dataId);
             })
 
-
-        // console.log("Palabra clave: " + keyWord)
-        // console.log("Locacion: " + locationWord)
     })
-
+  
 }
 // function paginasAteriores(ids, i, pagina) {
 //     i = i - 20;
@@ -119,6 +116,7 @@ function busqueda() {
 // }
 
 function numeracionPag(ids) {
+   
     let cantidadPag = ids.length / 20
     let aumentoBotones = 20;
     let pagina = 20;
