@@ -45,7 +45,7 @@ function cargarSelect() {
     fetch('https://collectionapi.metmuseum.org/public/collection/v1/departments')
         .then((response) => response.json())
         .then((data) => {
-           // console.log(data);
+            // console.log(data);
 
             const traducciones = data.departments.map(departamento =>
                 traducir(departamento.displayName)
@@ -99,24 +99,30 @@ function busqueda() {
         fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${keyWord}${locationWord}${department}`)
             .then((response) => response.json())
             .then((data) => {
-                dataId = data.objectIDs;
-                numeracionPag(dataId);
-                mostrarTarjetas(dataId, 0, 20);
-                console.log("Data obtenida: ", dataId);
+                let dataId = data.objectIDs;
+                if (dataId && dataId.length > 0) {
+                    numeracionPag(dataId);
+                    mostrarTarjetas(dataId, 0, 20);
+                    console.log("Data obtenida: ", dataId);
+                } else {
+                    console.log("No se encontro obras")
+                    let error = document.createElement("h1")
+                    error.textContent= "No se encontraron obras"
+                    let tarjetas = document.getElementById("tarjetas")
+                    tarjetas.appendChild(error)
+                    document.querySelector("#paginas").innerHTML = ""
+                }
+
+
             })
 
     })
-  
+
 }
-// function paginasAteriores(ids, i, pagina) {
-//     i = i - 20;
-//     pagina = pagina - 20;
-//     mostrarBotones(ids, i, pagina)
-//     console.log("prueba boton menos")
-// }
+
 
 function numeracionPag(ids) {
-   
+
     let cantidadPag = ids.length / 20
     let aumentoBotones = 20;
     let pagina = 20;
@@ -130,22 +136,22 @@ function numeracionPag(ids) {
     if (cantidadPag > 20) {
         console.log("entro al if")
         mostrarBotones(ids, i, 20);
-       
+
         let botonMasPaginas = document.createElement("button");
         botonMasPaginas.textContent = "..."
         let paginasElement = document.querySelector("#paginas");
         paginasElement.appendChild(botonMasPaginas);
-        
+
         botonMasPaginas.addEventListener("click", () => {
             let botonMenosPaginas = document.createElement("button");
             botonMenosPaginas.textContent = "..."
             botonMenosPaginas.id = "menos"
 
-            botonMenosPaginas.onclick= function menosPaginas(){
+            botonMenosPaginas.onclick = function menosPaginas() {
                 i = i - 20;
                 pagina = pagina - 20;
-               // console.log(i +" pagina "+ pagina)
-               
+                // console.log(i +" pagina "+ pagina)
+
                 numeracionPag(ids)
             }
             i = i + aumentoBotones;
@@ -299,7 +305,9 @@ function carruselAdicionales(imagenesAdicionales) {
 
         const galleryItems = imagenesAdicionales.map(src => {
             const img = document.createElement('img');
-            img.src = src;
+            surce = src.replace("original", "web-large");
+            img.src = surce;
+
             img.style.display = "none";
             img.className = "imageneAdicional";
             elemento.appendChild(img);
