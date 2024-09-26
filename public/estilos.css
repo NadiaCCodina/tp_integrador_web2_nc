@@ -19,14 +19,14 @@ header {
 
 .tarjeta {
   position: relative;
-  width: 20%;
+  width: 22%;
   height: 600px;
   color: rgb(0, 0, 0);
   margin-top: 10px;
   border-radius: 10px;
   overflow: hidden;
   font-weight: 300;
-  margin: 20px;
+  margin: 10px;
   border-color: rgb(255, 142, 145);
   border-style: solid;
   text-align: center;
@@ -65,7 +65,7 @@ header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around
+  justify-content:center;
   
 }
 
@@ -75,14 +75,40 @@ header {
   border-bottom: 5px solid;
 
 }
+#imputBusqueda{
+  position: relative;
+  width: auto;
+  
+  margin: auto;
+  display: flex;
+  top:-145px;
+  opacity: 100% !important;
+}
 
+
+@media (max-width: 500px) {
+  #imputBusqueda {
+    flex-direction: column;
+    width: 100%;
+    color: aliceblue;
+   
+    padding: 10px;
+    width: 300px;
+    position: static;
+
+
+  }
+
+}
 #busqueda {
   
   display: flex;
-  background-image: url("../img/themet1.jpg");
+  background-image: url("../img/themet2.jpg");
   background-size: 100%;
   justify-content:center;
-  padding: 175px;
+  padding: 225px;
+  top: 10px;
+  opacity: 75%;
 }
 
 #formulario {

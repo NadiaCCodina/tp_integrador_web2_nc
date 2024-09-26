@@ -4,8 +4,9 @@ busqueda();
 cargarSelect();
 
 
+
 async function traducir(texto) {
-  
+
     return new Promise((resolve, reject) => {
 
         fetch("/traducir", {
@@ -24,7 +25,7 @@ async function traducir(texto) {
                 return;
             }).then(respuesta => resolve(respuesta.traduccion))
             .catch(err => reject(err))
-      
+
     })
 }
 
@@ -35,34 +36,34 @@ function cargarSelect() {
     if (!departamentos) {
         return;
     }
-    
+
     let option = document.createElement("option");
     option.value = 0;
     option.text = "Todos los Departamentos";
     departamentos.appendChild(option);
-    
+
     fetch('https://collectionapi.metmuseum.org/public/collection/v1/departments')
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-    
-            const traducciones = data.departments.map(departamento => 
+
+            const traducciones = data.departments.map(departamento =>
                 traducir(departamento.displayName)
             );
-    
+
             return Promise.all(traducciones).then((traducciones) => {
-          
+
                 for (let i = 0; i < traducciones.length; i++) {
                     let option = document.createElement("option");
-                    option.value = data.departments[i].departmentId; 
-                    option.text = traducciones[i]; 
+                    option.value = data.departments[i].departmentId;
+                    option.text = traducciones[i];
                     departamentos.appendChild(option);
                     console.log(option);
                 }
             });
         })
         .catch(err => console.error("Error al obtener departamentos o traducir:", err));
-    
+
 }
 
 function busqueda() {
@@ -105,35 +106,60 @@ function busqueda() {
             })
 
 
-       // console.log("Palabra clave: " + keyWord)
-       // console.log("Locacion: " + locationWord)
+        // console.log("Palabra clave: " + keyWord)
+        // console.log("Locacion: " + locationWord)
     })
 
 }
+// function paginasAteriores(ids, i, pagina) {
+//     i = i - 20;
+//     pagina = pagina - 20;
+//     mostrarBotones(ids, i, pagina)
+//     console.log("prueba boton menos")
+// }
+
 function numeracionPag(ids) {
     let cantidadPag = ids.length / 20
     let aumentoBotones = 20;
     let pagina = 20;
     let i = 1;
 
+
+
+
     console.log("cantidad de paginas " + cantidadPag)
 
     if (cantidadPag > 20) {
         console.log("entro al if")
         mostrarBotones(ids, i, 20);
+       
         let botonMasPaginas = document.createElement("button");
         botonMasPaginas.textContent = "..."
         let paginasElement = document.querySelector("#paginas");
         paginasElement.appendChild(botonMasPaginas);
+        
         botonMasPaginas.addEventListener("click", () => {
+            let botonMenosPaginas = document.createElement("button");
+            botonMenosPaginas.textContent = "..."
+            botonMenosPaginas.id = "menos"
+
+            botonMenosPaginas.onclick= function menosPaginas(){
+                i = i - 20;
+                pagina = pagina - 20;
+               // console.log(i +" pagina "+ pagina)
+               
+                numeracionPag(ids)
+            }
             i = i + aumentoBotones;
             pagina = pagina + aumentoBotones;
 
             mostrarBotones(ids, i, pagina)
-
+            let primerBoton = document.getElementById(i);
             paginasElement.appendChild(botonMasPaginas);
+            paginasElement.insertBefore(botonMenosPaginas, primerBoton)
+        });
 
-        })
+
     } else {
         mostrarBotones(ids, i, cantidadPag);
 
@@ -170,7 +196,7 @@ function mostrarBotones(ids, i, cantidadPag) {
 }
 function mostrarTarjetas(tarjetas, inicio, fin) {
 
-    console.log("metodo mostrar tarjetas " + inicio + "  " + fin)
+    // console.log("metodo mostrar tarjetas " + inicio + "  " + fin)
 
     let card = tarjetas.slice(inicio, fin)
 
@@ -249,7 +275,7 @@ async function crearTarjetas(objeto) {
         const botonElemento = document.createElement('div');
         botonElemento.innerHTML = boton;
         tarjeta.appendChild(botonElemento);
-       // console.log(imagenesAdicionales + " imagenes adicionales dentro del boton")
+        // console.log(imagenesAdicionales + " imagenes adicionales dentro del boton")
 
         let imagenesAdd = document.getElementById("imagenesAd")
         if (imagenesAdd) {
@@ -293,7 +319,7 @@ function carruselAdicionales(imagenesAdicionales) {
         nextButton.textContent = "Posterior"
         const container = document.getElementById('gallery-navigation');
         const salir = document.createElement('button');
-        salir.textContent="salir";
+        salir.textContent = "salir";
         salir.className = "salirAdicionales"
         const salirCarr = document.getElementById("salirCarrusel")
         salirCarr.appendChild(salir);
@@ -302,9 +328,9 @@ function carruselAdicionales(imagenesAdicionales) {
         document.querySelector('.salirAdicionales').addEventListener('click', () => {
             document.getElementById('gallery-navigation').innerHTML = "";
             elemento.innerHTML = ''
-            salirCarr.innerHTML= ""  
-            elemento.style.height="0%";   
-        });  
+            salirCarr.innerHTML = ""
+            elemento.style.height = "0%";
+        });
         if (galleryItems.length > 0) {
             galleryItems[currentIndex].style.display = "block";
         }
