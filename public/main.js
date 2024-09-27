@@ -107,7 +107,7 @@ function busqueda() {
                 } else {
                     console.log("No se encontro obras")
                     let error = document.createElement("h1")
-                    error.textContent= "No se encontraron obras"
+                    error.textContent = "No se encontraron obras"
                     let tarjetas = document.getElementById("tarjetas")
                     tarjetas.appendChild(error)
                     document.querySelector("#paginas").innerHTML = ""
@@ -128,9 +128,6 @@ function numeracionPag(ids) {
     let pagina = 20;
     let i = 1;
 
-
-
-
     console.log("cantidad de paginas " + cantidadPag)
 
     if (cantidadPag > 20) {
@@ -141,26 +138,34 @@ function numeracionPag(ids) {
         botonMasPaginas.textContent = "..."
         let paginasElement = document.querySelector("#paginas");
         paginasElement.appendChild(botonMasPaginas);
+        botonMasPaginas.className = "botonesPaginas";
 
         botonMasPaginas.addEventListener("click", () => {
             let botonMenosPaginas = document.createElement("button");
             botonMenosPaginas.textContent = "..."
             botonMenosPaginas.id = "menos"
+            botonMenosPaginas.className = "botonesPaginas";
 
             botonMenosPaginas.onclick = function menosPaginas() {
                 i = i - 20;
                 pagina = pagina - 20;
                 // console.log(i +" pagina "+ pagina)
-
                 numeracionPag(ids)
             }
-            i = i + aumentoBotones;
-            pagina = pagina + aumentoBotones;
+            cantidadPag = cantidadPag - 20;
+            console.log("cantidad de paginas restada" + cantidadPag)
+            if (cantidadPag > 20) {
 
-            mostrarBotones(ids, i, pagina)
-            let primerBoton = document.getElementById(i);
-            paginasElement.appendChild(botonMasPaginas);
-            paginasElement.insertBefore(botonMenosPaginas, primerBoton)
+                i = i + aumentoBotones;
+                pagina = pagina + aumentoBotones;
+
+                mostrarBotones(ids, i, pagina)
+                let primerBoton = document.getElementById(i);
+                paginasElement.appendChild(botonMasPaginas);
+                paginasElement.insertBefore(botonMenosPaginas, primerBoton)
+            }else{
+                numeracionPag(ids);
+            }
         });
 
 
@@ -179,6 +184,7 @@ function mostrarBotones(ids, i, cantidadPag) {
         let boton = document.createElement("button");
         boton.id = i;
         boton.textContent = i;
+        boton.className = "botonesPaginas";
 
         boton.addEventListener("click", () => {
             document.querySelector("#imagenesAd").innerHTML = ""
@@ -325,12 +331,13 @@ function carruselAdicionales(imagenesAdicionales) {
         nextButton.textContent = "Posterior"
         const container = document.getElementById('gallery-navigation');
         const salir = document.createElement('button');
-        salir.textContent = "salir";
+        salir.textContent = "X";
         salir.className = "salirAdicionales"
         const salirCarr = document.getElementById("salirCarrusel")
         salirCarr.appendChild(salir);
+        if(galleryItems.length>1){
         container.appendChild(prevButton);
-        container.appendChild(nextButton);
+        container.appendChild(nextButton);}
         document.querySelector('.salirAdicionales').addEventListener('click', () => {
             document.getElementById('gallery-navigation').innerHTML = "";
             elemento.innerHTML = ''

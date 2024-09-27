@@ -83,7 +83,7 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content:center;
-  
+  padding-top: 10px;
 }
 
 #portada {
@@ -221,17 +221,20 @@ header {
   z-index: 10;
   position: fixed;
   overflow: auto;
-  bottom: 0;
+  top: 0;
   width: 100%;
   display: flex;
   justify-content:space-around;
-  
+  margin: 5px;
+  color: aliceblue;
+ 
+  font-size: larger;
 }
 
-.salirEstilo{
+.salirAdicionales{
   padding: 10px;
   background-color: rgb(0, 0, 0);
-  font-size: 15px;
+  font-size: 10px;
   display: flex;
   color: aliceblue;
   border-radius: 12%;
@@ -243,4 +246,15 @@ header {
 #paginas{
   display: flex;
   justify-content:center;
+ 
+ 
+}
+.botonesPaginas{
+  font-size: 20px;
+ 
+  margin: 5px;
+  border-radius: 20%;
+  border-color:  rgb(190, 112, 112);
+  background-color:rgb(190, 112, 112); 
+  color:
 }
